@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Admin - User List</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header class="site-header slim">
+    <div class="container header-row">
+      <a href="/" class="brand">
+        <div class="logo">Home Tutor <span style="font-size: 1rem; color: var(--text-muted); font-weight: 500;">Admin</span></div>
+      </a>
+      <div class="auth-actions">
+        <a class="btn btn-outline" href="/login.html">Logout</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container admin-page">
+    <div class="admin-top">
+      <h2>Registered Students</h2>
+      <div class="search-row">
+        <input id="searchInput" placeholder="Search by username or ID..." />
+        <button id="searchBtn" class="btn btn-primary">Search</button>
+      </div>
+    </div>
+
+    <div class="user-cards">
+      <div class="user-card">
+        <div class="meta">
+          <strong>alice_smith</strong>
+          <span class="id">#1001</span>
+        </div>
+        <div class="info">alice@example.com</div>
+        <div class="actions">
+          <span class="badge premium">Premium</span>
+          <div class="action-btns">
+            <button class="btn btn-sm btn-outline">View</button>
+            <button class="btn btn-sm btn-danger">Delete</button>
+          </div>
+        </div>
+      </div>
+      <div class="user-card">
+        <div class="meta">
+          <strong>bob_johnson</strong>
+          <span class="id">#1002</span>
+        </div>
+        <div class="info">bob@example.com</div>
+        <div class="actions">
+          <span class="badge free">Free</span>
+          <div class="action-btns">
+            <button class="btn btn-sm btn-outline">View</button>
+            <button class="btn btn-sm btn-danger">Delete</button>
+          </div>
+        </div>
+      </div>
+      <div class="user-card">
+        <div class="meta">
+          <strong>charlie_d</strong>
+          <span class="id">#1003</span>
+        </div>
+        <div class="info">charlie@example.com</div>
+        <div class="actions">
+          <span class="badge premium">Premium</span>
+          <div class="action-btns">
+            <button class="btn btn-sm btn-outline">View</button>
+            <button class="btn btn-sm btn-danger">Delete</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">© 2026 Home Tutor. Admin Portal.</div>
+  </footer>
+
+  <script>
+    // Client-side search for user cards
+    document.getElementById('searchBtn').addEventListener('click', function(){
+      var q = document.getElementById('searchInput').value.toLowerCase();
+      var cards = document.querySelectorAll('.user-card');
+      cards.forEach(function(c){
+        var text = c.textContent.toLowerCase();
+        c.style.display = text.indexOf(q) !== -1 ? '' : 'none';
+      });
+    });
+    
+    // Add real-time search functionality as well
+    document.getElementById('searchInput').addEventListener('input', function() {
+        document.getElementById('searchBtn').click();
+    });
+  </script>
+</body>
+</html>
