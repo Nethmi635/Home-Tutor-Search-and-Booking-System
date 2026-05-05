@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Profile - Home Tutor</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header class="site-header slim">
+    <div class="container header-row">
+      <a href="/" class="brand">
+        <div class="logo">Home Tutor</div>
+      </a>
+      <div class="auth-actions">
+        <a class="btn btn-outline" href="/login.html">Logout</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container center-card">
+    <div class="card form-card">
+      <h2>Your Profile</h2>
+      <p class="muted">Manage and update your account details below.</p>
+      <form id="profileForm" class="form" action="#" method="post">
+        <label>Username
+          <input type="text" name="username" value="demo_user" required>
+        </label>
+        <label>Email Address
+          <input type="email" name="email" value="demo@example.com" required>
+        </label>
+        <label>New Password
+          <input type="password" name="password" placeholder="Leave blank to keep existing password">
+        </label>
+        <label>Membership Plan
+          <select name="membership">
+            <option selected>Free Plan</option>
+            <option>Premium Plan</option>
+          </select>
+        </label>
+        <div class="form-actions">
+          <button class="btn btn-primary large" type="submit">Save Changes</button>
+        </div>
+      </form>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">© 2026 Home Tutor. All rights reserved.</div>
+  </footer>
+</body>
+</html>
