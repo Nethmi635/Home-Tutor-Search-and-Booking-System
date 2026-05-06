@@ -27,24 +27,24 @@
       </div>
     </div>
 
-    <div class="user-cards" th:if="">
-      <div class="user-card" th:each="user : ">
+    <div class="user-cards" th:if="${users != null and users.size() > 0}">
+      <div class="user-card" th:each="user : ${users}">
         <div class="meta">
-          <strong th:text="">username</strong>
-          <span class="id" th:text="'#' + ">#1001</span>
+          <strong th:text="${user.username}">username</strong>
+          <span class="id" th:text="${'#' + user.id}">#1001</span>
         </div>
-        <div class="info" th:text="">email@example.com</div>
+        <div class="info" th:text="${user.email}">email@example.com</div>
         <div class="actions">
-          <span class="badge" th:text="" th:classappend="">Premium</span>
+          <span class="badge" th:text="${user.membershipType}" th:classappend=" ${user.membershipType.toLowerCase()}">Premium</span>
           <div class="action-btns">
-            <button class="btn btn-sm btn-outline" th:data-view-id="">View</button>
-            <button class="btn btn-sm btn-danger" th:data-delete-id="">Delete</button>
+            <button class="btn btn-sm btn-outline" th:attr="data-view-id=${user.id}">View</button>
+            <button class="btn btn-sm btn-danger" th:attr="data-delete-id=${user.id}">Delete</button>
           </div>
         </div>
       </div>
     </div>
 
-    <div class="user-cards" th:if="">
+    <div class="user-cards" th:if="${users == null or users.size() == 0}">
       <div class="user-card">No users found.</div>
     </div>
   </main>

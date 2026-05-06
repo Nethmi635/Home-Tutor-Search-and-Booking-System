@@ -3,17 +3,17 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Login - Home Tutor</title>
+  <title>Admin Login - Home Tutor</title>
   <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
   <header class="site-header slim">
     <div class="container header-row">
       <a href="/" class="brand">
-        <div class="logo">Home Tutor</div>
+        <div class="logo">Home Tutor <span style="font-size: 1rem; color: var(--text-muted); font-weight: 500;">Admin</span></div>
       </a>
       <div class="auth-actions">
-        <a class="btn btn-outline" href="/users/login">Login</a>
+        <a class="btn btn-outline" href="/users/login">User Login</a>
         <a class="btn btn-primary" href="/register.html">Sign Up</a>
       </div>
     </div>
@@ -21,33 +21,33 @@
 
   <main class="container center-card">
     <div class="card form-card">
-      <h2>Welcome back</h2>
-      <p class="muted">Login to manage your bookings and lessons.</p>
-      
-      <!-- Error message display -->
+      <h2>Admin Sign In</h2>
+      <p class="muted">Enter your admin credentials and OTP.</p>
+
       <div th:if="${error}" class="alert alert-error">
         <strong>Login Failed</strong><br>
-        The username/email or password you entered is incorrect. Please try again.
+        Invalid admin credentials or OTP.
       </div>
 
-      <form id="loginForm" class="form" action="/users/login" method="post">
+      <form id="adminLoginForm" class="form" action="/admin/login" method="post">
         <label>Username or Email
-          <input type="text" name="username" placeholder="e.g. alex@example.com" required>
+          <input type="text" name="username" placeholder="admin@gmail.com" required>
         </label>
         <label>Password
           <input type="password" name="password" placeholder="Enter your password" required>
         </label>
-        <!-- OTP removed for regular users; admins use separate admin login page -->
+        <label>OTP
+          <input type="text" name="otp" placeholder="Enter OTP" required>
+        </label>
         <div class="form-actions">
-          <button class="btn btn-primary large" type="submit">Log In to Dashboard</button>
-          <a class="link" href="/register">Don't have an account? Create one</a>
+          <button class="btn btn-primary large" type="submit">Log In as Admin</button>
         </div>
       </form>
     </div>
   </main>
 
   <footer class="site-footer">
-    <div class="container">© 2026 Home Tutor. All rights reserved.</div>
+    <div class="container">© 2026 Home Tutor. Admin Portal.</div>
   </footer>
 </body>
 </html>

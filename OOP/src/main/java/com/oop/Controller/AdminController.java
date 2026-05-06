@@ -1,10 +1,8 @@
 package com.oop.Controller;
 
-import com.oop.Model.User;
-import com.oop.Services.UserService;
-import jakarta.servlet.http.HttpSession;
 import java.util.List;
 import java.util.stream.Collectors;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +11,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.oop.Model.User;
+import com.oop.Model.UserRole;
+import com.oop.Services.UserService;
+
+import jakarta.servlet.http.HttpSession;
+
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
@@ -20,6 +24,34 @@ public class AdminController {
 
     public AdminController(UserService userService) {
         this.userService = userService;
+    }
+
+    @GetMapping("/login")
+    public String adminLoginPage() {
+        return "admin_login";
+    }
+
+    @PostMapping("/login")
+    public String adminLogin(
+        @RequestParam("username") String usernameOrEmail,
+        @RequestParam("password") String password,
+        @RequestParam("otp") String otp,
+        HttpSession session,
+        Model model
+    ) {
+        java.util.Optional<User> userOpt = userService.login(usernameOrEmail, password, otp);
+        if (userOpt.isPresent() && userOpt.get().getRole() == UserRole.ADMIN) {
+            User user = userOpt.get();
+            session.setAttribute("userId", user.getId());
+            session.setAttribute("username", user.getUsername());
+            session.setAttribute("email", user.getEmail());
+            session.setAttribute("fullName", user.getFullName());
+            session.setAttribute("membershipType", user.getMembershipType());
+            session.setAttribute("userRole", user.getRole());
+            return "redirect:/admin/list";
+        }
+        model.addAttribute("error", true);
+        return "admin_login";
     }
 
     @GetMapping("/list")
