@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Student Dashboard - Home Tutor</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="dashboard-body">
+  <header class="site-header slim">
+    <div class="container header-row">
+      <a href="/dashboard.html" class="brand">
+        <div class="logo">Home Tutor</div>
+      </a>
+      <nav class="top-nav">
+        <a href="/dashboard.html" class="nav-link active">Dashboard</a>
+        <a href="#" class="nav-link">My Tutors</a>
+        <a href="/profile.html" class="nav-link">Settings</a>
+      </nav>
+      <div class="auth-actions">
+        <span class="user-greeting">Hi, Alex</span>
+        <img src="https://ui-avatars.com/api/?name=Alex+Morgan&background=6366f1&color=fff" alt="Avatar" class="avatar-sm">
+        <a class="btn btn-outline btn-sm" href="/login.html">Logout</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container dashboard-main">
+    <div class="dashboard-header">
+      <h2>Welcome back, Alex! 👋</h2>
+      <p class="muted">Ready for your next learning session?</p>
+    </div>
+
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-icon" style="background: rgba(99, 102, 241, 0.1); color: var(--accent-primary);">📚</div>
+        <div class="stat-info">
+          <h3>4</h3>
+          <p>Active Courses</p>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon" style="background: rgba(16, 185, 129, 0.1); color: var(--success);">⏱️</div>
+        <div class="stat-info">
+          <h3>12h</h3>
+          <p>Hours Learned</p>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon" style="background: rgba(168, 85, 247, 0.1); color: var(--accent-secondary);">⭐</div>
+        <div class="stat-info">
+          <h3>4.8</h3>
+          <p>Average Score</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="dashboard-content">
+      <section class="upcoming-lessons">
+        <div class="section-top">
+          <h3>Upcoming Lessons</h3>
+          <a href="#" class="link">View Full Calendar</a>
+        </div>
+        <div class="lesson-card">
+          <div class="lesson-time">
+            <span class="date">Today</span>
+            <span class="time">14:00 PM</span>
+          </div>
+          <div class="lesson-details">
+            <h4>Advanced Mathematics</h4>
+            <p>with Dr. Sarah Jenkins</p>
+          </div>
+          <button class="btn btn-primary btn-sm">Join Class</button>
+        </div>
+        <div class="lesson-card">
+          <div class="lesson-time">
+            <span class="date">Tomorrow</span>
+            <span class="time">10:00 AM</span>
+          </div>
+          <div class="lesson-details">
+            <h4>Physics 101</h4>
+            <p>with Prof. Michael Lee</p>
+          </div>
+          <button class="btn btn-outline btn-sm">Reschedule</button>
+        </div>
+      </section>
+
+      <section class="recent-courses">
+        <div class="section-top">
+          <h3>My Tutors</h3>
+        </div>
+        <div class="tutor-grid">
+          <div class="tutor-card">
+            <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=200&auto=format&fit=crop" alt="Dr. Sarah Jenkins">
+            <h4>Dr. Sarah Jenkins</h4>
+            <p class="muted">Mathematics</p>
+            <button class="btn btn-outline btn-sm" style="width: 100%; margin-top: 12px;">Message</button>
+          </div>
+          <div class="tutor-card">
+            <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=200&auto=format&fit=crop" alt="Prof. Michael Lee">
+            <h4>Prof. Michael Lee</h4>
+            <p class="muted">Physics</p>
+            <button class="btn btn-outline btn-sm" style="width: 100%; margin-top: 12px;">Message</button>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">© 2026 Home Tutor. All rights reserved.</div>
+  </footer>
+</body>
+</html>
