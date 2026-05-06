@@ -78,20 +78,72 @@
   </footer>
 
   <script>
-    // Client-side search for user cards
-    document.getElementById('searchBtn').addEventListener('click', function(){
-      var q = document.getElementById('searchInput').value.toLowerCase();
-      var cards = document.querySelectorAll('.user-card');
-      cards.forEach(function(c){
-        var text = c.textContent.toLowerCase();
-        c.style.display = text.indexOf(q) !== -1 ? '' : 'none';
+    function renderUsers(users) {
+      var container = document.querySelector('.user-cards');
+      container.innerHTML = '';
+
+      if (!users || users.length === 0) {
+        var empty = document.createElement('div');
+        empty.className = 'user-card';
+        empty.textContent = 'No users found.';
+        container.appendChild(empty);
+        return;
+      }
+
+      users.forEach(function(user) {
+        var membership = (user.membershipType || 'FREE').toLowerCase();
+        var card = document.createElement('div');
+        card.className = 'user-card';
+        card.innerHTML =
+          '<div class="meta">' +
+            '<strong>' + user.username + '</strong>' +
+            '<span class="id">#' + user.id + '</span>' +
+          '</div>' +
+          '<div class="info">' + user.email + '</div>' +
+          '<div class="actions">' +
+            '<span class="badge ' + membership + '">' + user.membershipType + '</span>' +
+            '<div class="action-btns">' +
+              '<button class="btn btn-sm btn-outline" data-view-id="' + user.id + '">View</button>' +
+              '<button class="btn btn-sm btn-danger" data-delete-id="' + user.id + '">Delete</button>' +
+            '</div>' +
+          '</div>';
+        container.appendChild(card);
       });
+
+      container.querySelectorAll('[data-delete-id]').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          var id = btn.getAttribute('data-delete-id');
+          deleteUser(id);
+        });
+      });
+    }
+
+    function searchUsers() {
+      var q = document.getElementById('searchInput').value;
+      fetch('/admin/users/search?query=' + encodeURIComponent(q))
+        .then(function(res) { return res.json(); })
+        .then(renderUsers)
+        .catch(function() { renderUsers([]); });
+    }
+
+    function deleteUser(id) {
+      fetch('/admin/users/delete', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: 'id=' + encodeURIComponent(id)
+      })
+      .then(function() { searchUsers(); });
+    }
+
+    document.getElementById('searchBtn').addEventListener('click', function() {
+      searchUsers();
     });
-    
-    // Add real-time search functionality as well
+
     document.getElementById('searchInput').addEventListener('input', function() {
-        document.getElementById('searchBtn').click();
+      searchUsers();
     });
+
+    searchUsers();
   </script>
 </body>
 </html>
