@@ -1,5 +1,5 @@
-<!doctype html>
-<html lang="en">
+﻿<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
@@ -23,19 +23,23 @@
       <h2>Your Profile</h2>
       <p class="muted">Manage and update your account details below.</p>
       <form id="profileForm" class="form" action="/users/profile" method="post">
+        <input type="hidden" name="userId" th:value="${userId}">
         <label>Username
-          <input type="text" name="username" value="demo_user" required>
+          <input type="text" name="username" th:value="${username}" required>
         </label>
         <label>Email Address
-          <input type="email" name="email" value="demo@example.com" required>
+          <input type="email" name="email" th:value="${email}" required>
+        </label>
+        <label>Full Name
+          <input type="text" name="fullName" th:value="${fullName}" required>
         </label>
         <label>New Password
           <input type="password" name="password" placeholder="Leave blank to keep existing password">
         </label>
         <label>Membership Plan
           <select name="membership">
-            <option selected>Free Plan</option>
-            <option>Premium Plan</option>
+            <option value="Free Plan" th:selected="${membershipType == 'FREE'}">Free Plan</option>
+            <option value="Premium Plan" th:selected="${membershipType == 'PREMIUM'}">Premium Plan</option>
           </select>
         </label>
         <div class="form-actions">

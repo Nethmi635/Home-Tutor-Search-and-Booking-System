@@ -92,7 +92,7 @@ public class UserService {
         return Optional.of(userRepository.save(user));
     }
 
-    public Optional<User> updateProfile(Long userId, String username, String email, String password, String membershipLabel) {
+    public Optional<User> updateProfile(Long userId, String username, String fullName, String email, String password, String membershipLabel) {
         if (userId == null) {
             return Optional.empty();
         }
@@ -105,6 +105,7 @@ public class UserService {
         User user = userOpt.get();
 
         validateRequired(username, "Username");
+        validateRequired(fullName, "Full name");
         validateRequired(email, "Email");
 
         Optional<User> usernameMatch = userRepository.findByUsername(username);
@@ -118,6 +119,7 @@ public class UserService {
         }
 
         user.setUsername(username);
+        user.setFullName(fullName);
         user.setEmail(email);
 
         if (password != null && !password.isBlank()) {
