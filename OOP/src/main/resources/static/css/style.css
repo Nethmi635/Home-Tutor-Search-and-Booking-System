@@ -869,3 +869,28 @@ body {
 .tutor-card p {
   font-size: 0.85rem;
 }
+
+/* Alert Messages */
+.alert {
+  padding: 12px 16px;
+  border-radius: var(--radius-md);
+  margin-bottom: 16px;
+  font-size: 0.95rem;
+  border-left: 4px solid;
+}
+
+.alert-error {
+  background-color: rgba(239, 68, 68, 0.1);
+  color: #991b1b;
+  border-left-color: var(--danger);
+}
+
+.alert-error strong {
+  font-weight: 600;
+}
+
+.alert-success {
+  background-color: rgba(16, 185, 129, 0.1);
+  color: #065f46;
+  border-left-color: var(--success);
+}

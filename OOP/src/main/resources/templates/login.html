@@ -1,5 +1,5 @@
-﻿<!doctype html>
-<html lang="en">
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
@@ -13,8 +13,8 @@
         <div class="logo">Home Tutor</div>
       </a>
       <div class="auth-actions">
-        <a class="btn btn-outline" href="/login.html">Login</a>
-        <a class="btn btn-primary" href="/register.html">Sign Up</a>
+        <a class="btn btn-outline" href="/login">Login</a>
+        <a class="btn btn-primary" href="/register">Sign Up</a>
       </div>
     </div>
   </header>
@@ -23,6 +23,13 @@
     <div class="card form-card">
       <h2>Welcome back</h2>
       <p class="muted">Login to manage your bookings and lessons.</p>
+      
+      <!-- Error message display -->
+      <div th:if="${error}" class="alert alert-error">
+        <strong>Login Failed</strong><br>
+        The username/email or password you entered is incorrect. Please try again.
+      </div>
+
       <form id="loginForm" class="form" action="/users/login" method="post">
         <label>Username or Email
           <input type="text" name="username" placeholder="e.g. alex@example.com" required>
@@ -32,15 +39,14 @@
         </label>
         <div class="form-actions">
           <button class="btn btn-primary large" type="submit">Log In to Dashboard</button>
-          <a class="link" href="/register.html">Don't have an account? Create one</a>
+          <a class="link" href="/register">Don't have an account? Create one</a>
         </div>
       </form>
     </div>
   </main>
 
   <footer class="site-footer">
-    <div class="container">Â© 2026 Home Tutor. All rights reserved.</div>
+    <div class="container">© 2026 Home Tutor. All rights reserved.</div>
   </footer>
 </body>
 </html>
-

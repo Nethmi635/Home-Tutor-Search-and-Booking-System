@@ -40,12 +40,18 @@ public class UserController {
         }
     }
 
+    @GetMapping("/login")
+    public String loginPage() {
+        return "login";
+    }
+
     @PostMapping("/login")
     public String login(
         @RequestParam("username") String usernameOrEmail,
         @RequestParam("password") String password,
         @RequestParam(value = "otp", required = false) String otp,
-        HttpSession session
+        HttpSession session,
+        Model model
     ) {
         Optional<User> user = userService.login(usernameOrEmail, password, otp);
         if (user.isPresent()) {
@@ -60,7 +66,8 @@ public class UserController {
                 ? "redirect:/admin/list"
                 : "redirect:/users/dashboard";
         }
-        return "redirect:/login.html?error=1";
+        model.addAttribute("error", true);
+        return "login";
     }
 
     @GetMapping("/dashboard")
