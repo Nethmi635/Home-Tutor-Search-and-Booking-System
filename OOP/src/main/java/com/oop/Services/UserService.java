@@ -3,6 +3,7 @@ package com.oop.Services;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
@@ -162,8 +163,23 @@ public class UserService {
             Optional<User> byId = userRepository.findById(Long.parseLong(trimmed));
             return byId.map(List::of).orElse(Collections.emptyList());
         }
-        Optional<User> byUsername = userRepository.findByUsername(trimmed);
-        return byUsername.map(List::of).orElse(Collections.emptyList());
+
+        // Word-by-word username and email matching
+        String[] queryWords = trimmed.toLowerCase().split("\\s+");
+        List<User> allUsers = userRepository.findAll();
+        return allUsers.stream()
+            .filter(user -> {
+                String usernameLower = user.getUsername().toLowerCase();
+                String emailLower = user.getEmail().toLowerCase();
+                // Match if any word appears in username or email
+                for (String word : queryWords) {
+                    if (usernameLower.contains(word) || emailLower.contains(word)) {
+                        return true;
+                    }
+                }
+                return false;
+            })
+            .collect(Collectors.toList());
     }
 
     public void deleteUser(Long id) {
