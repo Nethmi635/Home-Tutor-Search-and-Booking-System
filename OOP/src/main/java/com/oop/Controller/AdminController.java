@@ -2,9 +2,11 @@ package com.oop.Controller;
 
 import com.oop.Model.User;
 import com.oop.Services.UserService;
+import jakarta.servlet.http.HttpSession;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
-@RequestMapping("/admin/users")
+@RequestMapping("/admin")
 public class AdminController {
     private final UserService userService;
 
@@ -20,7 +22,21 @@ public class AdminController {
         this.userService = userService;
     }
 
-    @GetMapping("/search")
+    @GetMapping("/list")
+    public String listUsers(HttpSession session, Model model) {
+        Object userId = session.getAttribute("userId");
+        if (userId == null) {
+            return "redirect:/login.html";
+        }
+        List<User> users = userService.searchUsers(null);
+        List<UserSummary> summaries = users.stream()
+            .map(UserSummary::fromUser)
+            .collect(Collectors.toList());
+        model.addAttribute("users", summaries);
+        return "admin_list";
+    }
+
+    @GetMapping("/users/search")
     @ResponseBody
     public List<UserSummary> search(@RequestParam(value = "query", required = false) String query) {
         return userService.searchUsers(query)
@@ -29,7 +45,7 @@ public class AdminController {
             .collect(Collectors.toList());
     }
 
-    @PostMapping("/delete")
+    @PostMapping("/users/delete")
     @ResponseBody
     public void delete(@RequestParam("id") Long id) {
         userService.deleteUser(id);

@@ -1,14 +1,16 @@
 package com.oop.Services;
 
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.stereotype.Service;
+
 import com.oop.Model.AdminUser;
 import com.oop.Model.MembershipType;
 import com.oop.Model.RegularUser;
 import com.oop.Model.User;
 import com.oop.Repository.UserRepository;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
-import org.springframework.stereotype.Service;
 
 @Service
 public class UserService {
@@ -88,6 +90,52 @@ public class UserService {
         }
 
         return Optional.of(userRepository.save(user));
+    }
+
+    public Optional<User> updateProfile(Long userId, String username, String email, String password, String membershipLabel) {
+        if (userId == null) {
+            return Optional.empty();
+        }
+
+        Optional<User> userOpt = userRepository.findById(userId);
+        if (userOpt.isEmpty()) {
+            return Optional.empty();
+        }
+
+        User user = userOpt.get();
+
+        validateRequired(username, "Username");
+        validateRequired(email, "Email");
+
+        Optional<User> usernameMatch = userRepository.findByUsername(username);
+        if (usernameMatch.isPresent() && !usernameMatch.get().getId().equals(user.getId())) {
+            throw new IllegalArgumentException("Username already exists.");
+        }
+
+        Optional<User> emailMatch = userRepository.findByEmail(email);
+        if (emailMatch.isPresent() && !emailMatch.get().getId().equals(user.getId())) {
+            throw new IllegalArgumentException("Email already exists.");
+        }
+
+        user.setUsername(username);
+        user.setEmail(email);
+
+        if (password != null && !password.isBlank()) {
+            user.setPassword(password);
+        }
+
+        if (membershipLabel != null && !membershipLabel.isBlank()) {
+            user.setMembershipType(MembershipType.fromLabel(membershipLabel));
+        }
+
+        return Optional.of(userRepository.save(user));
+    }
+
+    public Optional<User> findById(Long userId) {
+        if (userId == null) {
+            return Optional.empty();
+        }
+        return userRepository.findById(userId);
     }
 
     public List<User> searchUsers(String query) {

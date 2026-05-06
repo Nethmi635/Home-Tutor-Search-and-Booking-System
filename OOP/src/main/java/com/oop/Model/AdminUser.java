@@ -9,7 +9,7 @@ import jakarta.persistence.Entity;
 @DiscriminatorValue("ADMIN")
 public class AdminUser extends User {
 
-    @Column(nullable = false, length = 32)
+    @Column(nullable = true, length = 32)
     private String otpSecret = "123456";
 
     public AdminUser() {
