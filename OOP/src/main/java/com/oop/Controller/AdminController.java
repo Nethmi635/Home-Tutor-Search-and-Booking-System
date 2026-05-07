@@ -58,7 +58,7 @@ public class AdminController {
     public String listUsers(HttpSession session, Model model) {
         Object userId = session.getAttribute("userId");
         if (userId == null) {
-            return "redirect:/login.html";
+            return "redirect:/admin/login";
         }
         List<User> users = userService.searchUsers(null);
         List<UserSummary> summaries = users.stream()
@@ -81,6 +81,12 @@ public class AdminController {
     @ResponseBody
     public void delete(@RequestParam("id") Long id) {
         userService.deleteUser(id);
+    }
+
+    @GetMapping("/logout")
+    public String logout(HttpSession session) {
+        session.invalidate();
+        return "redirect:/";
     }
 
     static class UserSummary {

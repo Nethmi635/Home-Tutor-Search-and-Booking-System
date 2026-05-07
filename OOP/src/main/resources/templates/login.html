@@ -14,7 +14,7 @@
       </a>
       <div class="auth-actions">
         <a class="btn btn-outline" href="/users/login">Login</a>
-        <a class="btn btn-primary" href="/register.html">Sign Up</a>
+        <a class="btn btn-primary" href="/users/register">Sign Up</a>
       </div>
     </div>
   </header>
@@ -23,6 +23,12 @@
     <div class="card form-card">
       <h2>Welcome back</h2>
       <p class="muted">Login to manage your bookings and lessons.</p>
+      
+      <!-- Success message display -->
+      <div th:if="${registered}" class="alert alert-success">
+        <strong>Account Created!</strong><br>
+        Your account has been successfully created. Please log in to continue.
+      </div>
       
       <!-- Error message display -->
       <div th:if="${error}" class="alert alert-error">
@@ -40,7 +46,7 @@
         <!-- OTP removed for regular users; admins use separate admin login page -->
         <div class="form-actions">
           <button class="btn btn-primary large" type="submit">Log In to Dashboard</button>
-          <a class="link" href="/register">Don't have an account? Create one</a>
+          <a class="link" href="/users/register">Don't have an account? Create one</a>
         </div>
       </form>
     </div>

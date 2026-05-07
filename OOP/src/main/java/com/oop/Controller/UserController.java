@@ -24,6 +24,11 @@ public class UserController {
         this.userService = userService;
     }
 
+    @GetMapping("/register")
+    public String registerPage() {
+        return "register";
+    }
+
     @PostMapping("/register")
     public String register(
         @RequestParam("fullname") String fullName,
@@ -34,14 +39,18 @@ public class UserController {
     ) {
         try {
             userService.registerUser(fullName, username, email, password, membership);
-            return "redirect:/login.html?registered=1";
+            return "redirect:/users/login?registered=1";
         } catch (IllegalArgumentException ex) {
-            return "redirect:/register.html?error=1";
+            return "redirect:/users/register?error=1";
         }
     }
 
     @GetMapping("/login")
-    public String loginPage() {
+    public String loginPage(@RequestParam(value = "registered", required = false) String registered,
+                           Model model) {
+        if (registered != null) {
+            model.addAttribute("registered", true);
+        }
         return "login";
     }
 
@@ -74,7 +83,7 @@ public class UserController {
     public String dashboard(HttpSession session, Model model) {
         Object userId = session.getAttribute("userId");
         if (userId == null) {
-            return "redirect:/login.html";
+            return "redirect:/users/login";
         }
         model.addAttribute("username", session.getAttribute("username"));
         model.addAttribute("email", session.getAttribute("email"));
@@ -87,7 +96,7 @@ public class UserController {
     public String profilePage(HttpSession session, Model model) {
         Long userId = (Long) session.getAttribute("userId");
         if (userId == null) {
-            return "redirect:/login.html";
+            return "redirect:/users/login";
         }
 
         model.addAttribute("userId", userId);
@@ -130,5 +139,11 @@ public class UserController {
         } catch (IllegalArgumentException ex) {
             return "redirect:/users/profile?error=1";
         }
+    }
+
+    @GetMapping("/logout")
+    public String logout(HttpSession session) {
+        session.invalidate();
+        return "redirect:/";
     }
 }
